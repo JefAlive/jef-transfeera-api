@@ -1,4 +1,13 @@
 {
+  "name": "jef-transfeera-api",
+  "description": "API REST for Receivers Management built with TypeScript, KOA, Prisma 2 and Docker-compatible",
+  "scripts": {
+    "watch-server": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/server.ts",
+    "build-ts": "tsc",
+    "serve": "node dist/server.js",
+    "build": "npm run build-ts",
+    "start": "npm run serve"
+  },
   "devDependencies": {
     "typescript": "^4.9.4"
   }

@@ -8,6 +8,12 @@ Alguma descrição legal aqui
 - ...
 - ...
 
+## Padrões de projeto utilizados
+
+- MVC
+- SOLID
+- Estrutura de pastas: package by feature
+
 ## Requisitos
 
 - Node versão x.y.z

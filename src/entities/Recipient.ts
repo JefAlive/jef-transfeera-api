@@ -1,3 +1,5 @@
+import { uuid } from 'uuidv4';
+
 export enum RecipientStatus {
   RASCUNHO,
   VALIDADO
@@ -37,5 +39,13 @@ export class Recipient {
   public bankAccountAgency: string;
   public bankAccountNumber: string;
   public bankAccountType: BankAccountType;
+
+  constructor(props: Omit<Recipient, 'id'>, id?: string) {
+    Object.assign(this, props);
+
+    if (!id) {
+      this.id = uuid();
+    }
+  }
 
 }

@@ -13,7 +13,6 @@ Alguma descrição legal aqui
 - MVC
 - SOLID
 - Estrutura de pastas: package by feature
-- Banco de dados desnormalizado (não normalizaria sem conhecer a estrutura inteira da aplicação pra ver se faz sentido)
 
 ## Requisitos
 

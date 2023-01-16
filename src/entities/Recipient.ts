@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 
 export enum RecipientStatus {
   RASCUNHO,
@@ -34,13 +34,12 @@ export class Recipient {
   public pixKey: string;
   public pixKeyType: PixKeyType;
   public email: string;
-  public type: PixKeyType;
   public bankAccountCode: number;
   public bankAccountAgency: string;
   public bankAccountNumber: string;
   public bankAccountType: BankAccountType;
 
-  constructor(props: Omit<Recipient, 'id'>, id?: string) {
+  constructor(props: Omit<Recipient, "id">, id?: string) {
     Object.assign(this, props);
 
     if (!id) {

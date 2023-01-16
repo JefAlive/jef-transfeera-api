@@ -1,6 +1,6 @@
-import { Recipient } from "../../../entities/Recipient"
-import { IRecipientsRepository } from "../../../repositories/IRecipientsRepository"
-import { ICreateRecipientRequestDTO } from "./CreateRecipientDTO"
+import { Recipient } from "../../../entities/Recipient";
+import { IRecipientsRepository } from "../../../repositories/IRecipientsRepository";
+import { ICreateRecipientRequestDTO } from "./CreateRecipientDTO";
 
 export class CreateRecipientUseCase {
   constructor(

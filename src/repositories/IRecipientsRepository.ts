@@ -1,4 +1,4 @@
-import { Recipient } from '../entities/Recipient';
+import { Recipient } from "../entities/Recipient";
 
 export interface IRecipientsRepository {
   find(id: string): Promise<Recipient>;

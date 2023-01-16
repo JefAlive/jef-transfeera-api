@@ -4,6 +4,6 @@ export interface Config {
 
 const config: Config = {
   port: +(process.env.PORT || 3000)
-}
+};
 
-export { config }
+export { config };

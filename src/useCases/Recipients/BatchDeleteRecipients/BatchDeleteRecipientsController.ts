@@ -1,8 +1,8 @@
 import { Context } from "koa";
 
 export class BatchDeleteRecipientsController {
-  async handle(ctx: Context, next: Function) {
+  handle = async (ctx: Context, next: () => void) => {
     ctx.response.status = 200;
-    await next()
+    await next();
   }
 }

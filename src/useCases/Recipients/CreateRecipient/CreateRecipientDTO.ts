@@ -9,7 +9,6 @@ export interface ICreateRecipientRequestDTO {
   pixKey: string;
   pixKeyType: PixKeyType;
   email: string;
-  type: PixKeyType;
   bankAccountCode: number;
   bankAccountAgency: string;
   bankAccountNumber: string;

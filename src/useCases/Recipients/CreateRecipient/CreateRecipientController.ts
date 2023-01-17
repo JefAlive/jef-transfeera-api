@@ -1,5 +1,4 @@
 import { Context } from "koa";
-import { PixKeyType } from "src/entities/Recipient";
 import { CreateRecipientUseCase } from "./CreateRecipientUseCase";
 
 export class CreateRecipientController {
@@ -39,5 +38,5 @@ export class CreateRecipientController {
     ctx.response.status = 201;
     
     next();
-  }
+  };
 }

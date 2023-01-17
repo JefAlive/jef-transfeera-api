@@ -1,4 +1,5 @@
 import { Context } from "koa";
+import { PixKeyType } from "src/entities/Recipient";
 import { CreateRecipientUseCase } from "./CreateRecipientUseCase";
 
 export class CreateRecipientController {

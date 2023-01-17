@@ -13,11 +13,12 @@ Alguma descrição legal aqui
 - MVC
 - SOLID
 - Estrutura de pastas: package by feature
+- Nunca utilizar exclusão física (apenas exclusão lógica)
 
 ## Requisitos
 
-- Node versão x.y.z
-- postgresql versão x.y.z (não necessário com Docker)
+- Node v16.x.x
+- postgresql 15.1
 - Docker (opcional)
 
 ## Comandos

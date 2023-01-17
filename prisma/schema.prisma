@@ -11,19 +11,19 @@ datasource db {
 }
 
 model Recipient {
-  id                  String   @id
+  id                  String   @id @default(uuid())
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
-  title               String
+  deleted             Boolean  @default(false)
   name                String
   federalId           String
   personNature        String
   status              String
-  pixKey              String
+  pixKey              String   @db.VarChar(140)
   pixKeyType          String
-  email               String   @db.VarChar(255)
-  bankAccountCode     String
-  bankAccountAgency   String
-  bankAccountNumber   String
-  bankAccountType     String
+  email               String?  @db.VarChar(250)
+  bankAccountCode     String?
+  bankAccountAgency   String?
+  bankAccountNumber   String?
+  bankAccountType     String?
 }

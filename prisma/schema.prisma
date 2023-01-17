@@ -11,19 +11,19 @@ datasource db {
 }
 
 model Recipient {
-  id                  Int      @id @default(autoincrement())
+  id                  String   @id
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
-  title               String   @db.VarChar(255)
-  name                String   @db.VarChar(255)
-  federalId           String   @db.VarChar(255)
-  personNature        String   @db.VarChar(255)
-  status              String   @db.VarChar(255)
-  pixKey              String   @db.VarChar(255)
-  pixKeyType          String   @db.VarChar(255)
+  title               String
+  name                String
+  federalId           String
+  personNature        String
+  status              String
+  pixKey              String
+  pixKeyType          String
   email               String   @db.VarChar(255)
-  bankAccountCode     String   @db.VarChar(255)
-  bankAccountAgency   String   @db.VarChar(255)
-  bankAccountNumber   String   @db.VarChar(255)
-  bankAccountType     String   @db.VarChar(255)
+  bankAccountCode     String
+  bankAccountAgency   String
+  bankAccountNumber   String
+  bankAccountType     String
 }

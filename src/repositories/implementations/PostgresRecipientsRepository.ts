@@ -10,7 +10,7 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
   async find(id: string): Promise<any> {
     return await this.prisma.recipient.findUnique({
       where: {
-        id: 1
+        id: id
       }
     });
   }

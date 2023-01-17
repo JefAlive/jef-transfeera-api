@@ -32,9 +32,11 @@
     "@koa/cors": "^4.0.0",
     "@koa/router": "^12.0.0",
     "@prisma/client": "^4.9.0",
+    "@types/lodash": "^4.14.191",
     "koa": "^2.14.1",
     "koa-bodyparser": "^4.3.0",
     "koa-helmet": "^6.1.0",
+    "lodash": "^4.17.21",
     "uuid": "^9.0.0"
   },
   "jest": {

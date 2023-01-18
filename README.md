@@ -4,16 +4,17 @@ Alguma descrição legal aqui
 
 ## Tecnologias adotadas
 
-- ...
-- ...
+- Koa (por ter uma performance melhor que Express e Hapi)
+- Prisma (uma evolução do TypeORM)
 - ...
 
 ## Padrões de projeto utilizados
 
-- MVC
 - SOLID
+- MVC
 - Estrutura de pastas: package by feature
 - Nunca utilizar exclusão física (apenas exclusão lógica)
+- Código mais próximo do TypeScript puro, sem muitas anotações (que é o que aconteceria no caso do Nest)
 
 ## Requisitos
 

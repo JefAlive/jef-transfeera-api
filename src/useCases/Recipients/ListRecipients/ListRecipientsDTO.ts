@@ -1,17 +1,17 @@
 export interface IListRecipientRequestDTO {
 
-  name: string;
-  status: string;
-  pixKey: string;
-  pixKeyType: string;
-  page: number;
+  name?: string;
+  status?: string;
+  pixKey?: string;
+  pixKeyType?: string;
+  page: bigint;
 
 }
 
 export interface IListRecipientPaginatedResponseDTO {
 
-  totalPages: number;
-  totalRows: number;
+  totalPages: bigint;
+  totalRows: bigint;
   recipients: Array<any>;
 
 }

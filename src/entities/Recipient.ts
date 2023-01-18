@@ -29,15 +29,15 @@ export class Recipient {
 
   public name: string;
   public federalId: string;
-  public personNature: PersonNature;
-  public status: RecipientStatus;
+  public personNature?: PersonNature;
+  public status?: RecipientStatus;
   public pixKey: string;
   public pixKeyType: PixKeyType;
-  public email: string;
-  public bankAccountCode: number;
-  public bankAccountAgency: string;
-  public bankAccountNumber: string;
-  public bankAccountType: BankAccountType;
+  public email?: string;
+  public bankAccountCode?: number;
+  public bankAccountAgency?: string;
+  public bankAccountNumber?: string;
+  public bankAccountType?: BankAccountType;
 
   constructor(props: Omit<Recipient, "id">, id?: string) {
     Object.assign(this, props);

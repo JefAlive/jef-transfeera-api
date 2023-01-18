@@ -11,29 +11,17 @@ export class CreateRecipientController {
     const {
       name,
       federalId,
-      personNature,
-      status,
       pixKey,
       pixKeyType,
-      email,
-      bankAccountCode,
-      bankAccountAgency,
-      bankAccountNumber,
-      bankAccountType
+      email
     } = body;
 
     await this.createRecipientUseCase.execute({
       name,
       federalId,
-      personNature,
-      status,
       pixKey,
       pixKeyType,
-      email,
-      bankAccountCode,
-      bankAccountAgency,
-      bankAccountNumber,
-      bankAccountType
+      email
     });
     ctx.response.status = 201;
     

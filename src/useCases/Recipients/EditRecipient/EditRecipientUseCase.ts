@@ -31,7 +31,7 @@ export class EditRecipientUseCase {
   private async validateOnlyChangeEmailWhenStatusValidated(data: IEditRecipientRequestDTO) {
     const recipient = await this.recipientsRepository.find(data.id);
     if (recipient.status === 'VALIDADO') {
-      if (data.federalId || data.name || data.pixKey || data.pixKeyType ) {
+      if (data.federalId || data.name || data.pixKey || data.pixKeyType?.toString() ) {
         throw Error('only allowed to change is email');
       }
     }

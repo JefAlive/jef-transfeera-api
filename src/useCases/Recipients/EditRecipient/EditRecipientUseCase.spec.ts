@@ -6,14 +6,18 @@ import { IRecipientsRepository } from 'src/repositories/IRecipientsRepository';
 describe('edit recipient use case', () => {
   let repositoryMock: jest.Mocked<IRecipientsRepository>;
   let useCase: EditRecipientUseCase;
+
+  function mockFindFunction(status: string) {
+    repositoryMock.find = jest.fn(async (id: string) => {
+      return {
+        status: status
+      }
+    });
+  }
   
   beforeEach(() => {
     repositoryMock = {
-      find: jest.fn(async (id: string) => {
-        return {
-          status: 'RASCUNHO'
-        }
-      }),
+      find: jest.fn(),
       list: jest.fn(),
       count: jest.fn(),
       save: jest.fn(),
@@ -25,6 +29,8 @@ describe('edit recipient use case', () => {
   })
 
   test('updates all fields by uuid', async () => {
+    mockFindFunction('RASCUNHO');
+
     await useCase.execute({
       id: '0750f176-e301-47c5-b592-414b90275872',
       name: 'José',
@@ -45,6 +51,8 @@ describe('edit recipient use case', () => {
   });
 
   test('requires valid uuid', async () => {
+    mockFindFunction('RASCUNHO');
+
     const call = async () => {
       await useCase.execute({
         id: ''
@@ -55,12 +63,8 @@ describe('edit recipient use case', () => {
     expect(repositoryMock.update).not.toHaveBeenCalledWith();
   })
 
-  test('allows updating only email when is already validated', async () => {
-    repositoryMock.find = jest.fn(async (id: string) => {
-      return {
-        status: 'VALIDADO'
-      }
-    });
+  test('throws error when trying to update name and already validated', async () => {
+    mockFindFunction('VALIDADO');
 
     const call = async () => {
       await useCase.execute({
@@ -71,5 +75,61 @@ describe('edit recipient use case', () => {
 
     await expect(call).rejects.toThrowError('only allowed to change is email');
     expect(repositoryMock.update).not.toHaveBeenCalledWith();
+  })
+
+  test('throws error when trying to update federalId and already validated', async () => {
+    mockFindFunction('VALIDADO');
+
+    const call = async () => {
+      await useCase.execute({
+        id: '0750f176-e301-47c5-b592-414b90275872',
+        federalId: '555-444-333-21',
+      });
+    };
+
+    await expect(call).rejects.toThrowError('only allowed to change is email');
+    expect(repositoryMock.update).not.toHaveBeenCalledWith();
+  })
+
+  test('throws error when trying to update pixKey and already validated', async () => {
+    mockFindFunction('VALIDADO');
+
+    const call = async () => {
+      await useCase.execute({
+        id: '0750f176-e301-47c5-b592-414b90275872',
+        pixKey: 'example@email.com',
+      });
+    };
+
+    await expect(call).rejects.toThrowError('only allowed to change is email');
+    expect(repositoryMock.update).not.toHaveBeenCalledWith();
+  })
+
+  test('throws error when trying to update pixKeyType and already validated', async () => {
+    mockFindFunction('VALIDADO');
+
+    const call = async () => {
+      await useCase.execute({
+        id: '0750f176-e301-47c5-b592-414b90275872',
+        pixKeyType: PixKeyType.CPF,
+      });
+    };
+
+    await expect(call).rejects.toThrowError('only allowed to change is email');
+    expect(repositoryMock.update).not.toHaveBeenCalledWith();
+  })
+
+  test('allows updating only email when is already validated', async () => {
+    mockFindFunction('VALIDADO');
+
+    await useCase.execute({
+      id: '0750f176-e301-47c5-b592-414b90275872',
+      email: 'example2@email.com',
+    });
+
+    expect(repositoryMock.update).toHaveBeenCalledWith('0750f176-e301-47c5-b592-414b90275872', {
+      id: '0750f176-e301-47c5-b592-414b90275872',
+      email: 'example2@email.com',
+    });
   })
 })

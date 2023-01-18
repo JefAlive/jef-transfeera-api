@@ -8,7 +8,7 @@ export class DeleteRecipientUseCase {
     private recipientsRepository: IRecipientsRepository
   ) {}
 
-  async execute(data: IDeleteRecipientRequestDTO): Promise<any> {
+  async execute(data: IDeleteRecipientRequestDTO): Promise<void> {
     this.validateIsUuidV4(data.id);
     return await this.recipientsRepository.delete(data.id);
   }

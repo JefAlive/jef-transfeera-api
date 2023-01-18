@@ -16,18 +16,28 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
     });
   }
   async list(filters: IListRecipientRequestDTO): Promise<Array<any>> {
-    const list = await this.prisma.recipient.findMany({
-      where: {
-        status: filters.status,
-        pixKeyType: filters.pixKeyType,
-        name: {
-          contains: filters.name
-        },
-        pixKey: {
-          contains: filters.pixKey
-        }
+    const where = {
+      deleted: false,
+      status: filters.status,
+      pixKeyType: filters.pixKeyType,
+      name: {
+        contains: filters.name
+      },
+      pixKey: {
+        contains: filters.pixKey
       }
+    }
+    const list = await this.prisma.recipient.findMany({
+      where: where,
+      orderBy: {
+        createdAt: 'asc'
+      },
+      take: 10,
+      skip: 0
     });
+    const count = await this.prisma.recipient.count({
+      where: where
+    })
     return list;
   }
   async save(recipient: Recipient): Promise<void> {

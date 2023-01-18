@@ -14,6 +14,10 @@ COPY --chown=node:node . .
 
 RUN npm run build
 
+RUN npm run migrate:integration
+
+RUN npm run start
+
 EXPOSE 3000
 
 CMD [ "npm", "run", "start" ]

@@ -23,7 +23,7 @@ export class ListRecipientsController {
       pixKeyType,
       page
     });
-    ctx.response.body = { recipients };
+    ctx.response.body = recipients;
     ctx.response.status = 200;
     next();
   };

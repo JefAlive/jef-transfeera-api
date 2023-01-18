@@ -12,6 +12,7 @@
     "migrate": "prisma migrate dev",
     "migrate:integration": "dotenv -e .env.test -- npx prisma migrate deploy --name postgres-init",
     "test:unit": "jest",
+    "test:int": "jest --config jest-integration.config.json",
     "test:integration": "npm run docker:up && npm run test:migrate && dotenv -e .env.test -- jest --config jest-integration.config.json",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down"

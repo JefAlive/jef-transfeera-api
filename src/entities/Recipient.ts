@@ -27,12 +27,12 @@ export class Recipient {
 
   public readonly id: string;
 
-  public name: string;
-  public federalId: string;
+  public name?: string;
+  public federalId?: string;
   public personNature?: PersonNature;
   public status?: RecipientStatus;
-  public pixKey: string;
-  public pixKeyType: PixKeyType;
+  public pixKey?: string;
+  public pixKeyType?: PixKeyType;
   public email?: string;
   public bankAccountCode?: number;
   public bankAccountAgency?: string;

@@ -32,7 +32,11 @@ describe('list recipients use case', () => {
   })
 
   test('list recipients > page 1/1, using filters', async () => {
-    mockPagination([{}, {}], 2)
+    mockPagination([{
+      id: '1'
+    }, {
+      id: '2'
+    }], 2)
 
     const paginatedRecipients = await useCase.execute({
       page: BigInt(1),
@@ -60,6 +64,8 @@ describe('list recipients use case', () => {
     expect(paginatedRecipients.totalRows).toEqual(2);
     expect(paginatedRecipients.totalPages).toEqual(1);
     expect(paginatedRecipients.recipients).toHaveLength(2);
+    expect(paginatedRecipients.recipients).toContainEqual({ id: '1' });
+    expect(paginatedRecipients.recipients).toContainEqual({ id: '2' });
   });
 
   test('list recipients > page 2/2', async () => {

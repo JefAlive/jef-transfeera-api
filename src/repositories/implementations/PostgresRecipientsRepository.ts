@@ -15,30 +15,40 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
       }
     });
   }
-  async list(filters: IListRecipientRequestDTO): Promise<Array<any>> {
-    const where = {
-      deleted: false,
-      status: filters.status,
-      pixKeyType: filters.pixKeyType,
-      name: {
-        contains: filters.name
+  async list(filters: IListRecipientRequestDTO, take: number, skip: number): Promise<Array<any>> {
+    return await this.prisma.recipient.findMany({
+      where: {
+        deleted: false,
+        status: filters.status,
+        pixKeyType: filters.pixKeyType,
+        name: {
+          contains: filters.name
+        },
+        pixKey: {
+          contains: filters.pixKey
+        }
       },
-      pixKey: {
-        contains: filters.pixKey
-      }
-    }
-    const list = await this.prisma.recipient.findMany({
-      where: where,
       orderBy: {
         createdAt: 'asc'
       },
-      take: 10,
-      skip: 0
+      take: take,
+      skip: skip
     });
-    const count = await this.prisma.recipient.count({
-      where: where
+  }
+  async count(filters: IListRecipientRequestDTO): Promise<number> {
+    return await this.prisma.recipient.count({
+      where: {
+        deleted: false,
+        status: filters.status,
+        pixKeyType: filters.pixKeyType,
+        name: {
+          contains: filters.name
+        },
+        pixKey: {
+          contains: filters.pixKey
+        }
+      }
     })
-    return list;
   }
   async save(recipient: Recipient): Promise<void> {
     await this.prisma.recipient.create({

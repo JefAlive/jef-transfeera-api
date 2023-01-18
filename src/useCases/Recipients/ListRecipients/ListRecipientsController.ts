@@ -12,14 +12,16 @@ export class ListRecipientsController {
       name,
       status,
       pixKey,
-      pixKeyType
+      pixKeyType,
+      page
     } = query;
 
     const recipients = await this.listRecipientsUseCase.execute({
       name,
       status,
       pixKey,
-      pixKeyType
+      pixKeyType,
+      page
     });
     ctx.response.body = { recipients };
     ctx.response.status = 200;

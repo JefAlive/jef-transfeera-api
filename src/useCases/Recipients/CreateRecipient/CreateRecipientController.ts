@@ -16,13 +16,14 @@ export class CreateRecipientController {
       email
     } = body;
 
-    await this.createRecipientUseCase.execute({
+    const recipient = await this.createRecipientUseCase.execute({
       name,
       federalId,
       pixKey,
       pixKeyType,
       email
     });
+    ctx.response.body = recipient;
     ctx.response.status = 201;
     
     next();

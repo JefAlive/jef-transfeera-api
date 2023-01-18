@@ -50,8 +50,8 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
       }
     })
   }
-  async save(recipient: Recipient): Promise<void> {
-    await this.prisma.recipient.create({
+  async save(recipient: Recipient): Promise<any> {
+    return await this.prisma.recipient.create({
       data: {
         id: recipient.id,
         name: String(recipient.name),

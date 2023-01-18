@@ -9,6 +9,9 @@ export class CreateRecipientUseCase {
 
   async execute(data: ICreateRecipientRequestDTO) {
     const recipient = new Recipient(data);
-    await this.recipientsRepository.save(recipient);
+    const createdRecipient = await this.recipientsRepository.save(recipient);
+    return {
+      recipient: createdRecipient
+    };
   }
 }

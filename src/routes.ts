@@ -15,6 +15,6 @@ const router = new Router({
   .post("/", createRecipientController.handle)
   .put("/:id", editRecipientController.handle)
   .del("/:id", deleteRecipientController.handle)
-  .del("/delete-batch/:ids", batchDeleteRecipientsController.handle);
+  .post("/batch-delete", batchDeleteRecipientsController.handle);
 
 export { router };

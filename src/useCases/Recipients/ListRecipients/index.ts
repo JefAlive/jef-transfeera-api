@@ -1,9 +1,8 @@
 import { ListRecipientsUseCase } from "./ListRecipientsUseCase";
 import { ListRecipientsController } from "./ListRecipientsController";
 import { PostgresRecipientsRepository } from "../../../repositories/implementations/PostgresRecipientsRepository";
-import { PrismaClient } from "@prisma/client";
+import prismaClient from '../../../prisma';
 
-const prismaClient = new PrismaClient();
 const recipientsRepository = new PostgresRecipientsRepository(prismaClient);
 const listRecipientsUseCase = new ListRecipientsUseCase(recipientsRepository);
 const listRecipientsController = new ListRecipientsController(listRecipientsUseCase);

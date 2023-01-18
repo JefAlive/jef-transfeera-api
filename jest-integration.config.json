@@ -1,0 +1,11 @@
+{
+  "roots": [
+    "<rootDir>"
+  ],
+  "testMatch": [
+    "**/src/**/*.+(ispec.ts)"
+  ],
+  "transform": {
+    "^.+\\.(ts)$": "ts-jest"
+  }
+}

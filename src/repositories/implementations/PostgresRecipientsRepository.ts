@@ -54,11 +54,11 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
     await this.prisma.recipient.create({
       data: {
         id: recipient.id,
-        name: recipient.name,
-        federalId: recipient.federalId,
+        name: String(recipient.name),
+        federalId: String(recipient.federalId),
         personNature: String(recipient.personNature),
         status: String(recipient.status),
-        pixKey: recipient.pixKey,
+        pixKey: String(recipient.pixKey),
         pixKeyType: String(recipient.pixKeyType),
         email: recipient.email,
         bankAccountCode: String(recipient.bankAccountCode),

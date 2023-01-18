@@ -1,6 +1,6 @@
 import { Recipient } from "src/entities/Recipient";
 import { IRecipientsRepository } from "../IRecipientsRepository";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { IListRecipientRequestDTO } from "src/useCases/Recipients/ListRecipients/ListRecipientsDTO";
 
 export class PostgresRecipientsRepository implements IRecipientsRepository {
@@ -9,7 +9,7 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
   ) {}
 
   async find(id: string): Promise<any> {
-    return await this.prisma.recipient.findUnique({
+    return await this.prisma.recipient.findUniqueOrThrow({
       where: {
         id: id
       }
@@ -20,13 +20,7 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
       where: {
         deleted: false,
         status: filters.status,
-        pixKeyType: filters.pixKeyType,
-        name: {
-          contains: filters.name
-        },
-        pixKey: {
-          contains: filters.pixKey
-        }
+        pixKeyType: filters.pixKeyType
       },
       orderBy: {
         createdAt: 'asc'
@@ -76,15 +70,10 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
       data: {
         name: recipient.name,
         federalId: recipient.federalId,
-        personNature: String(recipient.personNature),
-        status: String(recipient.status),
+        personNature: recipient.personNature,
         pixKey: recipient.pixKey,
-        pixKeyType: String(recipient.pixKeyType),
-        email: recipient.email,
-        bankAccountCode: String(recipient.bankAccountCode),
-        bankAccountAgency: recipient.bankAccountAgency,
-        bankAccountNumber: recipient.bankAccountNumber,
-        bankAccountType: String(recipient.bankAccountType)
+        pixKeyType: recipient.pixKeyType,
+        email: recipient.email
       }
     })
   }

@@ -1,6 +1,7 @@
 import { Context } from "koa";
 import { EditRecipientUseCase } from "./EditRecipientUseCase";
 import _ from 'lodash';
+import { PixKeyType } from "src/entities/Recipient";
 
 export class EditRecipientController {
   constructor(
@@ -23,9 +24,9 @@ export class EditRecipientController {
       name,
       federalId,
       pixKey,
-      pixKeyType,
+      pixKeyType: pixKeyType as PixKeyType,
       email
-    })
+    });
     ctx.response.body = {
       recipient
     };

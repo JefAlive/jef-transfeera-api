@@ -13,6 +13,7 @@
     "strictPropertyInitialization": false
   },
   "include": [
+    "global.d.ts",
     "src/**/*"
   ],
   "exclude": [

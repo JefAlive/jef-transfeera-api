@@ -1,21 +1,21 @@
 import { v4 as uuid } from "uuid";
 
 export enum RecipientStatus {
-  RASCUNHO,
-  VALIDADO
+  RASCUNHO = 'RASCUNHO',
+  VALIDADO = 'VALIDADO'
 }
 
 export enum PersonNature {
-  NATURAL,
-  LEGAL
+  NATURAL = 'NATURAL',
+  LEGAL = 'LEGAL'
 }
 
 export enum PixKeyType {
-  CPF,
-  CNPJ,
-  EMAIL,
-  TELEFONE,
-  CHAVE_ALEATORIA
+  CPF = 'CPF',
+  CNPJ = 'CNPJ',
+  EMAIL = 'EMAIL',
+  TELEFONE = 'TELEFONE',
+  CHAVE_ALEATORIA = 'CHAVE_ALEATORIA'
 }
 
 export enum BankAccountType {

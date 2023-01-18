@@ -1,5 +1,7 @@
 import { IRecipientsRepository } from "../../../repositories/IRecipientsRepository";
 import { IFindRecipientRequestDTO } from "./FindRecipientDTO";
+import { version as uuidVersion } from 'uuid';
+import { validate as uuidValidate } from 'uuid';
 
 export class FindRecipientUseCase {
   constructor(
@@ -7,6 +9,13 @@ export class FindRecipientUseCase {
   ) {}
 
   async execute(data: IFindRecipientRequestDTO): Promise<any> {
+    this.validateIsUuidV4(data.id);
     return await this.recipientsRepository.find(data.id);
+  }
+
+  private validateIsUuidV4(uuid: string) {
+    if (!uuidValidate(uuid) || uuidVersion(uuid) !== 4) {
+      throw Error('invalid uuid');
+    }
   }
 }

@@ -12,12 +12,8 @@ export class EditRecipientUseCase {
   async execute(data: IEditRecipientRequestDTO) {
     const recipient = new Recipient(data, data.id);
 
-    try {
-      this.validateIsUuidV4(data.id);
-      await this.validateOnlyChangeEmailWhenStatusValidated(data);
-    } catch(error) {
-      throw error;
-    }
+    this.validateIsUuidV4(data.id);
+    await this.validateOnlyChangeEmailWhenStatusValidated(data);
 
     return await this.recipientsRepository.update(data.id, recipient);
   }

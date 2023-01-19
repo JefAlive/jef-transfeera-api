@@ -22,8 +22,8 @@ describe('create recipient use case', () => {
     const useCase = new CreateRecipientUseCase(repositoryMock);
     await useCase.execute({
       name: 'José',
-      federalId: '033.077.999-01',
-      pixKey: '033.077.999-01',
+      federalId: '955.510.190-63',
+      pixKey: '955.510.190-63',
       pixKeyType: PixKeyType.CPF,
       email: 'example@email.com'
     })
@@ -31,10 +31,12 @@ describe('create recipient use case', () => {
     expect(repositoryMock.save).toHaveBeenCalledWith({
       id: expect.any(String),
       name: 'José',
-      federalId: '033.077.999-01',
-      pixKey: '033.077.999-01',
+      personNature: 'NATURAL',
+      federalId: '955.510.190-63',
+      pixKey: '955.510.190-63',
       pixKeyType: PixKeyType.CPF,
-      email: 'example@email.com'
+      email: 'example@email.com',
+      status: 'RASCUNHO'
     })
   });
 })

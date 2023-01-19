@@ -2,6 +2,7 @@ import { Context } from "koa";
 import { EditRecipientUseCase } from "./EditRecipientUseCase";
 import _ from 'lodash';
 import { PixKeyType } from "src/entities/Recipient";
+import { ValidationError } from "../../../../src/entities/ValidationError";
 
 export class EditRecipientController {
   constructor(

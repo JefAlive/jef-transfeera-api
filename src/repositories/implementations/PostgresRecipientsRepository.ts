@@ -20,7 +20,13 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
       where: {
         deleted: false,
         status: filters.status,
-        pixKeyType: filters.pixKeyType
+        pixKeyType: filters.pixKeyType,
+        name: {
+          contains: filters.name
+        },
+        pixKey: {
+          contains: filters.pixKey
+        }
       },
       orderBy: {
         createdAt: 'asc'

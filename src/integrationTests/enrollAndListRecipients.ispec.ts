@@ -224,6 +224,112 @@ describe('enroll recipients', () => {
     expect(findResponse.body.recipient.status).toEqual('RASCUNHO');
   });
 
+  test('edits a validated recipient allows to change email', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva',
+      federalId: '893.512.450-80',
+      pixKey: '893.512.450-80',
+      pixKeyType: 'CPF',
+      email: 'example@email.com'
+    });
+    const id = createdResponse.body.recipient.id;
+    expect(createdResponse.status).toBe(201);
+
+    await prisma.recipient.update({
+      where: {
+        id: id
+      },
+      data: {
+        status: 'VALIDADO'
+      }
+    });
+
+    const editResponse = await request(app.callback())
+      .put('/recipients/' + id)
+      .send({
+        email: 'example2@email.com'
+      })
+      .set('Accept', 'application/json');
+    expect(editResponse.status).toBe(200);
+
+    const findResponse = await request(app.callback())
+      .get('/recipients/' + id)
+      .set('Accept', 'application/json');
+    expect(findResponse.status).toBe(200);
+    expect(findResponse.body.recipient.id).toEqual(id);
+    expect(findResponse.body.recipient.email).toEqual('example2@email.com');
+    expect(findResponse.body.recipient.status).toEqual('VALIDADO');
+  });
+
+  test('edits a validated recipient throws error when try to change other fields', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva',
+      federalId: '893.512.450-80',
+      pixKey: '893.512.450-80',
+      pixKeyType: 'CPF',
+      email: 'example@email.com'
+    });
+    const id = createdResponse.body.recipient.id;
+    expect(createdResponse.status).toBe(201);
+
+    await prisma.recipient.update({
+      where: {
+        id: id
+      },
+      data: {
+        status: 'VALIDADO'
+      }
+    });
+
+    const editResponse1 = await request(app.callback())
+      .put('/recipients/' + id)
+      .send({
+        name: 'Zequinha'
+      })
+      .set('Accept', 'application/json');
+    expect(editResponse1.status).toEqual(400);
+
+    const editResponse2 = await request(app.callback())
+      .put('/recipients/' + id)
+      .send({
+        federalId: '236.289.590-47'
+      })
+      .set('Accept', 'application/json');
+    expect(editResponse2.status).toEqual(400);
+
+    const editResponse3 = await request(app.callback())
+      .put('/recipients/' + id)
+      .send({
+        pixKey: '236.289.590-47'
+      })
+      .set('Accept', 'application/json');
+    expect(editResponse3.status).toEqual(400);
+
+    const editResponse4 = await request(app.callback())
+      .put('/recipients/' + id)
+      .send({
+        pixKeyType: 'CHAVE_ALEATORIA'
+      })
+      .set('Accept', 'application/json');
+    expect(editResponse4.status).toEqual(400);
+
+    const findResponse = await request(app.callback())
+      .get('/recipients/' + id)
+      .set('Accept', 'application/json');
+    expect(findResponse.status).toBe(200);
+    expect(findResponse.body.recipient.id).toEqual(id);
+    expect(findResponse.body.recipient.email).toEqual('example@email.com');
+    expect(findResponse.body.recipient.status).toEqual('VALIDADO');
+  });
+
+  test('', async () => {
+
+  });
+
+  test('', async () => {
+
+  });
+
   beforeEach(async () => {
     await prisma.recipient.deleteMany();
   });
@@ -234,6 +340,7 @@ describe('enroll recipients', () => {
 
   beforeAll(async () => {
     await prisma.$connect();
+    app.silent = true;
   });
 
   afterAll(async () => {
@@ -246,8 +353,6 @@ describe('enroll recipients', () => {
 Cenários importantes testes de integração:
 
 - cadastrar sem campos obrigatórios e tomar erro
-- cadastrar, forçar status validado no prisma, e tentar editar além do campo email e tomar erro
-- cadastrar, forçar status validado no prisma, editar apenas email
 - filtrar listagem por cada parâmetro possível
 - tentar find, list, delete, delete-batch, edit com uuid inválido
 

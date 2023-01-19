@@ -1,3 +1,4 @@
+import { ValidationError } from "../../../../src/entities/ValidationError";
 import { IRecipientsRepository } from "../../../repositories/IRecipientsRepository";
 import { IListRecipientRequestDTO } from "./ListRecipientsDTO";
 
@@ -25,13 +26,13 @@ export class ListRecipientsUseCase {
 
   private validatePageNumber(page: bigint) {
     if (page < 1) {
-      throw new Error('invalid page number, must be at least 1');
+      throw new ValidationError('invalid page number, must be at least 1');
     }
   }
 
   private validatePageIsInRange(page: bigint, totalPages: number) {
     if (page > 1 && page > totalPages) {
-      throw new Error('exceeded valid page numbers, totalPages is ' + totalPages);
+      throw new ValidationError('exceeded valid page numbers, totalPages is ' + totalPages);
     }
   }
 }

@@ -3,6 +3,7 @@ import { IRecipientsRepository } from "../../../repositories/IRecipientsReposito
 import { IEditRecipientRequestDTO } from "./EditRecipientDTO";
 import { version as uuidVersion } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
+import { ValidationError } from "../../../../src/entities/ValidationError";
 
 export class EditRecipientUseCase {
   constructor(
@@ -20,7 +21,7 @@ export class EditRecipientUseCase {
 
   private validateIsUuidV4(uuid: string) {
     if (!uuidValidate(uuid) || uuidVersion(uuid) !== 4) {
-      throw Error('invalid uuid');
+      throw new ValidationError('invalid uuid');
     }
   }
 
@@ -28,7 +29,7 @@ export class EditRecipientUseCase {
     const recipient = await this.recipientsRepository.find(data.id);
     if (recipient.status === 'VALIDADO') {
       if (data.federalId || data.name || data.pixKey || data.pixKeyType?.toString() ) {
-        throw Error('only allowed to change is email');
+        throw new ValidationError('only allowed to change is email');
       }
     }
   }

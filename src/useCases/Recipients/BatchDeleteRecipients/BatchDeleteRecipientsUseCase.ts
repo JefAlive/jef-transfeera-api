@@ -2,6 +2,7 @@ import { IRecipientsRepository } from "src/repositories/IRecipientsRepository";
 import { IBatchDeleteRecipientRequestDTO } from "./BatchDeleteRecipientsDTO";
 import { version as uuidVersion } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
+import { ValidationError } from "../../../../src/entities/ValidationError";
 
 export class BatchDeleteRecipientsUseCase {
   constructor(
@@ -17,7 +18,7 @@ export class BatchDeleteRecipientsUseCase {
 
   private validateIsUuidV4(uuid: string) {
     if (!uuidValidate(uuid) || uuidVersion(uuid) !== 4) {
-      throw Error('invalid uuid');
+      throw new ValidationError('invalid uuid');
     }
   }
 }

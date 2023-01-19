@@ -335,7 +335,6 @@ describe("enroll recipients", () => {
     expect(listResponse.body.totalPages).toEqual(1);
   });
 
-
   test("deletes a recipient", async () => {
     const createdResponse = await createRecipient(app, {
       name: "Maricleydison Silva",

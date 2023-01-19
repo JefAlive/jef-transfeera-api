@@ -5,7 +5,6 @@ import bodyParser from "koa-bodyparser";
 
 import { router } from "./routes";
 import Router from "@koa/router";
-import { ValidationError } from "./entities/ValidationError";
 
 const restStatus = new Router();
 restStatus.get("/status", (ctx, next) => {

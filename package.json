@@ -14,7 +14,7 @@
     "migrate:integration": "dotenv -e .env.test -- npx prisma migrate deploy",
     "test:unit": "jest",
     "test:int": "jest --config jest-integration.config.json",
-    "test:integration": "npm run docker:up && npm run test:migrate && dotenv -e .env.test -- jest --config jest-integration.config.json",
+    "test:integration": "npm run docker:up && npm run migrate:integration && dotenv -e .env.test -- jest --config jest-integration.config.json",
     "docker:build": "docker-compose build --no-cache",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down"
@@ -31,6 +31,7 @@
     "@types/uuid": "^9.0.0",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
+    "dotenv-cli": "^6.0.0",
     "eslint": "^8.32.0",
     "jest": "^29.3.1",
     "jest-serial-runner": "^1.2.1",

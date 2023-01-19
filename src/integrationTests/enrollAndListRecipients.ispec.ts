@@ -207,6 +207,135 @@ describe('enroll recipients', () => {
     expect(listResponsePage2.body.totalPages).toEqual(2);
   });
 
+  test('create recipients and retrieves in list filtering by name', async () => {
+    await Promise.all(sampleRecipients.map(recipient => {
+      return createRecipient(app, recipient);
+    }));
+
+    const ids = (await prisma.recipient.findMany({
+      select: {
+        id: true
+      }
+    })).map((item: any) => {
+      return item.id;
+    });
+    await prisma.recipient.updateMany({
+      where: {
+        id: {
+          in: [ids[0], ids[1], ids[2]]
+        }
+      },
+      data: {
+        name: 'teste'
+      }
+    });
+
+    const listResponse = await request(app.callback())
+      .get('/recipients?page=1&name=teste')
+      .set('Accept', 'application/json');
+    expect(listResponse.status).toBe(200);
+    expect(listResponse.body.recipients).toHaveLength(3);
+    expect(listResponse.body.totalRows).toEqual(3);
+    expect(listResponse.body.totalPages).toEqual(1);
+  });
+
+  test('create recipients and retrieves in list filtering by status', async () => {
+    await Promise.all(sampleRecipients.map(recipient => {
+      return createRecipient(app, recipient);
+    }));
+
+    const ids = (await prisma.recipient.findMany({
+      select: {
+        id: true
+      }
+    })).map((item: any) => {
+      return item.id;
+    });
+    await prisma.recipient.updateMany({
+      where: {
+        id: {
+          in: [ids[0], ids[1], ids[2]]
+        }
+      },
+      data: {
+        status: 'VALIDADO'
+      }
+    });
+
+    const listResponse = await request(app.callback())
+      .get('/recipients?page=1&status=VALIDADO')
+      .set('Accept', 'application/json');
+    expect(listResponse.status).toBe(200);
+    expect(listResponse.body.recipients).toHaveLength(3);
+    expect(listResponse.body.totalRows).toEqual(3);
+    expect(listResponse.body.totalPages).toEqual(1);
+  });
+
+  test('create recipients and retrieves in list filtering by pixKey', async () => {
+    await Promise.all(sampleRecipients.map(recipient => {
+      return createRecipient(app, recipient);
+    }));
+
+    const ids = (await prisma.recipient.findMany({
+      select: {
+        id: true
+      }
+    })).map((item: any) => {
+      return item.id;
+    });
+    await prisma.recipient.updateMany({
+      where: {
+        id: {
+          in: [ids[0], ids[1], ids[2]]
+        }
+      },
+      data: {
+        pixKey: '000.000.000-01'
+      }
+    });
+
+    const listResponse = await request(app.callback())
+      .get('/recipients?page=1&pixKey=000-01')
+      .set('Accept', 'application/json');
+    expect(listResponse.status).toBe(200);
+    expect(listResponse.body.recipients).toHaveLength(3);
+    expect(listResponse.body.totalRows).toEqual(3);
+    expect(listResponse.body.totalPages).toEqual(1);
+  });
+
+  test('create recipients and retrieves in list filtering by pixKeyType', async () => {
+    await Promise.all(sampleRecipients.map(recipient => {
+      return createRecipient(app, recipient);
+    }));
+
+    const ids = (await prisma.recipient.findMany({
+      select: {
+        id: true
+      }
+    })).map((item: any) => {
+      return item.id;
+    });
+    await prisma.recipient.updateMany({
+      where: {
+        id: {
+          in: [ids[0], ids[1], ids[2]]
+        }
+      },
+      data: {
+        pixKeyType: 'TELEFONE'
+      }
+    });
+
+    const listResponse = await request(app.callback())
+      .get('/recipients?page=1&pixKeyType=TELEFONE')
+      .set('Accept', 'application/json');
+    expect(listResponse.status).toBe(200);
+    expect(listResponse.body.recipients).toHaveLength(3);
+    expect(listResponse.body.totalRows).toEqual(3);
+    expect(listResponse.body.totalPages).toEqual(1);
+  });
+
+
   test('deletes a recipient', async () => {
     const createdResponse = await createRecipient(app, {
       name: 'Maricleydison Silva',
@@ -417,14 +546,6 @@ describe('enroll recipients', () => {
     expect(findResponse.body.recipient.status).toEqual('VALIDADO');
   });
 
-  test('', async () => {
-
-  });
-
-  test('', async () => {
-
-  });
-
   beforeEach(async () => {
     await prisma.recipient.deleteMany();
   });
@@ -442,13 +563,3 @@ describe('enroll recipients', () => {
     await prisma.$disconnect();
   });
 });
-
-/*
-
-Cenários importantes testes de integração:
-
-- cadastrar sem campos obrigatórios e tomar erro
-- filtrar listagem por cada parâmetro possível
-- tentar find, list, delete, delete-batch, edit com uuid inválido
-
-*/

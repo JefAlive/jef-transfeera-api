@@ -32,6 +32,101 @@ async function createRecipient(app: Koa<any>, data: Object) {
 }
 
 describe('enroll recipients', () => {
+  test('create recipient missing name', async () => {
+    const createdResponse = await createRecipient(app, {
+      federalId: '48.686.965/0001-06',
+      pixKey: '893.512.450-80',
+      pixKeyType: 'CPF',
+      email: 'example@email.com'
+    });
+    expect(createdResponse.status).toBe(400);
+  });
+
+  test('create recipient missing federalId', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva Business LTDA',
+      pixKey: '893.512.450-80',
+      pixKeyType: 'CPF',
+      email: 'example@email.com'
+    });
+    expect(createdResponse.status).toBe(400);
+  });
+
+  test('create recipient missing pixKey', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva Business LTDA',
+      federalId: '48.686.965/0001-06',
+      pixKeyType: 'CPF',
+      email: 'example@email.com'
+    });
+    expect(createdResponse.status).toBe(400);
+  });
+
+  test('create recipient missing pixKeyType', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva Business LTDA',
+      federalId: '48.686.965/0001-06',
+      pixKey: '893.512.450-80',
+      email: 'example@email.com'
+    });
+    expect(createdResponse.status).toBe(400);
+  });
+
+  test('create recipient invalid pixKey CPF', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva Business LTDA',
+      federalId: '48.686.965/0001-06',
+      pixKey: '893.512.450-8',
+      pixKeyType: 'CPF',
+      email: 'example@email.com'
+    });
+    expect(createdResponse.status).toBe(400);
+  });
+
+  test('create recipient invalid pixKey CNPJ', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva Business LTDA',
+      federalId: '48.686.965/0001-06',
+      pixKey: '893.512.450-8',
+      pixKeyType: 'CNPJ',
+      email: 'example@email.com'
+    });
+    expect(createdResponse.status).toBe(400);
+  });
+
+  test('create recipient invalid pixKey EMAIL', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva Business LTDA',
+      federalId: '48.686.965/0001-06',
+      pixKey: 'example@email.com_',
+      pixKeyType: 'EMAIL',
+      email: 'example@email.com'
+    });
+    expect(createdResponse.status).toBe(400);
+  });
+
+  test('create recipient invalid pixKey TELEFONE', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva Business LTDA',
+      federalId: '48.686.965/0001-06',
+      pixKey: '+5547996426703_',
+      pixKeyType: 'TELEFONE',
+      email: 'example@email.com'
+    });
+    expect(createdResponse.status).toBe(400);
+  });
+
+  test('create recipient invalid pixKey CHAVE_ALEATORIA', async () => {
+    const createdResponse = await createRecipient(app, {
+      name: 'Maricleydison Silva Business LTDA',
+      federalId: '48.686.965/0001-06',
+      pixKey: '3897590759823759379',
+      pixKeyType: 'CHAVE_ALEATORIA',
+      email: 'example@email.com'
+    });
+    expect(createdResponse.status).toBe(400);
+  });
+
   test('create recipient and retrieve unique recipient by uuid', async () => {
     const createdResponse = await createRecipient(app, {
       name: 'Maricleydison Silva Business LTDA',
@@ -59,14 +154,14 @@ describe('enroll recipients', () => {
     expect(findResponse.body.recipient.pixKeyType).toEqual('CPF');
     expect(findResponse.body.recipient.email).toEqual('example@email.com');
     expect(findResponse.body.recipient.status).toEqual('RASCUNHO');
-  })
+  });
 
   test('create recipient and retrieves in list with one page', async () => {
     const createdResponse = await createRecipient(app, {
       name: 'Maricleydison Silva',
       federalId: '893.512.450-80',
-      pixKey: '893.512.450-80',
-      pixKeyType: 'CPF',
+      pixKey: '+5547999998888',
+      pixKeyType: 'TELEFONE',
       email: 'example@email.com'
     });
     expect(createdResponse.status).toBe(201);
@@ -85,8 +180,8 @@ describe('enroll recipients', () => {
     expect(listResponse.body.recipients[0].name).toEqual('Maricleydison Silva');
     expect(listResponse.body.recipients[0].federalId).toEqual('893.512.450-80');
     expect(listResponse.body.recipients[0].personNature).toEqual('NATURAL');
-    expect(listResponse.body.recipients[0].pixKey).toEqual('893.512.450-80');
-    expect(listResponse.body.recipients[0].pixKeyType).toEqual('CPF');
+    expect(listResponse.body.recipients[0].pixKey).toEqual('+5547999998888');
+    expect(listResponse.body.recipients[0].pixKeyType).toEqual('TELEFONE');
     expect(listResponse.body.recipients[0].email).toEqual('example@email.com');
   });
 

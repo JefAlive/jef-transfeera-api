@@ -4,12 +4,20 @@ version: '3.9'
 # The containers that compose the project
 services:
   db:
+    container_name: postgres
     image: postgres:15.1-alpine
     restart: always
-    container_name: integration-tests-prisma
     ports:
-      - '5433:5432'
+      - '5432:5432'
     environment:
-      POSTGRES_USER: prisma
-      POSTGRES_PASSWORD: prisma
-      POSTGRES_DB: tests
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: recipients
+  api:
+    container_name: api
+    restart: always
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      DATABASE_URL: 'postgresql://postgres:postgres@db:5432/recipients'

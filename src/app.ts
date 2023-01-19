@@ -8,8 +8,8 @@ import Router from "@koa/router";
 import { ValidationError } from "./entities/ValidationError";
 
 const restStatus = new Router();
-restStatus.get('/status', (ctx, next) => {
-  ctx.response.body = 'OK';
+restStatus.get("/status", (ctx, next) => {
+  ctx.response.body = "OK";
   next();
 });
 

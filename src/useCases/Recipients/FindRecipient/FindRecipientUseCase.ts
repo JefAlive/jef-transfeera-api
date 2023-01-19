@@ -1,8 +1,8 @@
 import { IRecipientsRepository } from "../../../repositories/IRecipientsRepository";
 import { IFindRecipientRequestDTO } from "./FindRecipientDTO";
-import { version as uuidVersion } from 'uuid';
-import { validate as uuidValidate } from 'uuid';
-import { ValidationError } from "../../../../src/entities/ValidationError";
+import { version as uuidVersion } from "uuid";
+import { validate as uuidValidate } from "uuid";
+import { ValidationError } from "../../../entities/ValidationError";
 
 export class FindRecipientUseCase {
   constructor(
@@ -16,7 +16,7 @@ export class FindRecipientUseCase {
 
   private validateIsUuidV4(uuid: string) {
     if (!uuidValidate(uuid) || uuidVersion(uuid) !== 4) {
-      throw new ValidationError('invalid uuid');
+      throw new ValidationError("invalid uuid");
     }
   }
 }

@@ -29,7 +29,7 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
         }
       },
       orderBy: {
-        createdAt: 'asc'
+        createdAt: "asc"
       },
       take: take,
       skip: skip
@@ -48,7 +48,7 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
           contains: filters.pixKey
         }
       }
-    })
+    });
   }
   async save(recipient: Recipient): Promise<any> {
     return await this.prisma.recipient.create({
@@ -66,7 +66,7 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
         bankAccountNumber: recipient.bankAccountNumber,
         bankAccountType: String(recipient.bankAccountType)
       }
-    })
+    });
   }
   async update(id: string, recipient: Recipient): Promise<any> {
     return await this.prisma.recipient.update({
@@ -81,7 +81,7 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
         pixKeyType: recipient.pixKeyType,
         email: recipient.email
       }
-    })
+    });
   }
   async delete(id: string): Promise<void> {
     await this.prisma.recipient.update({
@@ -91,7 +91,7 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
       data: {
         deleted: true
       }
-    })
+    });
   }
   async deleteMany(ids: Array<string>): Promise<void> {
     await this.prisma.recipient.updateMany({
@@ -103,6 +103,6 @@ export class PostgresRecipientsRepository implements IRecipientsRepository {
       data: {
         deleted: true
       }
-    })
+    });
   }
 }

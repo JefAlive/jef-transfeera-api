@@ -1,23 +1,13 @@
 FROM node:16-alpine
 
-RUN mkdir -p /home/node/app/node_modules && chown -R node:node /home/node/app
-
-WORKDIR /home/node/app
-
+WORKDIR /usr/src/app
 COPY package*.json ./
-
-USER node
-
 RUN npm install
 
-COPY --chown=node:node . .
+COPY . .
 
+RUN npx prisma generate
 RUN npm run build
 
-RUN npm run migrate:integration
-
-RUN npm run start
-
 EXPOSE 3000
-
-CMD [ "npm", "run", "start" ]
+CMD ["node", "dist/server.js"]

@@ -1,9 +1,9 @@
-import { describe, expect, test, jest, beforeAll } from '@jest/globals';
-import { CreateRecipientUseCase } from './CreateRecipientUseCase';
-import { PixKeyType } from '../../../../src/entities/Recipient';
-import { IRecipientsRepository } from 'src/repositories/IRecipientsRepository';
+import { describe, expect, test, jest, beforeAll } from "@jest/globals";
+import { CreateRecipientUseCase } from "./CreateRecipientUseCase";
+import { PixKeyType } from "../../../../src/entities/Recipient";
+import { IRecipientsRepository } from "src/repositories/IRecipientsRepository";
 
-describe('create recipient use case', () => {
+describe("create recipient use case", () => {
   let repositoryMock: jest.Mocked<IRecipientsRepository>;
   
   beforeEach(() => {
@@ -16,27 +16,27 @@ describe('create recipient use case', () => {
       delete: jest.fn(),
       deleteMany: jest.fn()
     };
-  })
+  });
 
-  test('generates uuid', async () => {
+  test("generates uuid", async () => {
     const useCase = new CreateRecipientUseCase(repositoryMock);
     await useCase.execute({
-      name: 'José',
-      federalId: '955.510.190-63',
-      pixKey: '955.510.190-63',
+      name: "José",
+      federalId: "955.510.190-63",
+      pixKey: "955.510.190-63",
       pixKeyType: PixKeyType.CPF,
-      email: 'example@email.com'
-    })
+      email: "example@email.com"
+    });
 
     expect(repositoryMock.save).toHaveBeenCalledWith({
       id: expect.any(String),
-      name: 'José',
-      personNature: 'NATURAL',
-      federalId: '955.510.190-63',
-      pixKey: '955.510.190-63',
+      name: "José",
+      personNature: "NATURAL",
+      federalId: "955.510.190-63",
+      pixKey: "955.510.190-63",
       pixKeyType: PixKeyType.CPF,
-      email: 'example@email.com',
-      status: 'RASCUNHO'
-    })
+      email: "example@email.com",
+      status: "RASCUNHO"
+    });
   });
-})
+});

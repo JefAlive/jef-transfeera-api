@@ -1,7 +1,7 @@
 import { CreateRecipientUseCase } from "./CreateRecipientUseCase";
 import { CreateRecipientController } from "./CreateRecipientController";
 import { PostgresRecipientsRepository } from "../../../repositories/implementations/PostgresRecipientsRepository";
-import prismaClient from '../../../prisma';
+import prismaClient from "../../../prisma";
 
 const recipientsRepository = new PostgresRecipientsRepository(prismaClient);
 const createRecipientUseCase = new CreateRecipientUseCase(recipientsRepository);

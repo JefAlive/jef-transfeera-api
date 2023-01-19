@@ -1,8 +1,8 @@
 import { Context } from "koa";
 import { EditRecipientUseCase } from "./EditRecipientUseCase";
-import _ from 'lodash';
+import _ from "lodash";
 import { PixKeyType } from "src/entities/Recipient";
-import { ValidationError } from "../../../../src/entities/ValidationError";
+import { ValidationError } from "../../../entities/ValidationError";
 
 export class EditRecipientController {
   constructor(
@@ -10,7 +10,7 @@ export class EditRecipientController {
   ) {}
 
   handle = async (ctx: Context, next: () => void) => {
-    const id = _.get(ctx, 'request.params.id');
+    const id = _.get(ctx, "request.params.id");
     const body: any = ctx.request.body;
     const {
       name,

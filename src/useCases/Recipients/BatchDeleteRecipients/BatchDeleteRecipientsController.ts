@@ -12,7 +12,7 @@ export class BatchDeleteRecipientsController {
       ids
     } = body;
 
-    await this.batchDeleteRecipientsUseCase.execute({ ids })
+    await this.batchDeleteRecipientsUseCase.execute({ ids });
     ctx.response.status = 200;
     await next();
   };

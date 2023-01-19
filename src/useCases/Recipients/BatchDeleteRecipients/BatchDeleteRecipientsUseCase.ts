@@ -1,8 +1,8 @@
 import { IRecipientsRepository } from "src/repositories/IRecipientsRepository";
 import { IBatchDeleteRecipientRequestDTO } from "./BatchDeleteRecipientsDTO";
-import { version as uuidVersion } from 'uuid';
-import { validate as uuidValidate } from 'uuid';
-import { ValidationError } from "../../../../src/entities/ValidationError";
+import { version as uuidVersion } from "uuid";
+import { validate as uuidValidate } from "uuid";
+import { ValidationError } from "../../../entities/ValidationError";
 
 export class BatchDeleteRecipientsUseCase {
   constructor(
@@ -12,13 +12,13 @@ export class BatchDeleteRecipientsUseCase {
   async execute(data: IBatchDeleteRecipientRequestDTO): Promise<void> {
     (data.ids || []).forEach((id) => {
       this.validateIsUuidV4(id);
-    })
+    });
     await this.recipientsRepository.deleteMany(data.ids);
   }
 
   private validateIsUuidV4(uuid: string) {
     if (!uuidValidate(uuid) || uuidVersion(uuid) !== 4) {
-      throw new ValidationError('invalid uuid');
+      throw new ValidationError("invalid uuid");
     }
   }
 }

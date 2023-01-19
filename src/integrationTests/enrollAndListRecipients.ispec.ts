@@ -1,174 +1,174 @@
-import request from 'supertest';
-import { app } from '../app';
-import { describe, expect, test, afterAll, afterEach } from '@jest/globals';
-import prisma from '../../src/prisma';
-import { version as uuidVersion } from 'uuid';
-import { validate as uuidValidate } from 'uuid';
-import Koa from 'koa';
+import request from "supertest";
+import { app } from "../app";
+import { describe, expect, test, afterAll, afterEach } from "@jest/globals";
+import prisma from "../../src/prisma";
+import { version as uuidVersion } from "uuid";
+import { validate as uuidValidate } from "uuid";
+import Koa from "koa";
 
 const sampleRecipients = [
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' },
-  { name: 'Maricleydison Silva', federalId: '893.512.450-80', pixKey: '893.512.450-80', pixKeyType: 'CPF', email: 'example@email.com' }
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" },
+  { name: "Maricleydison Silva", federalId: "893.512.450-80", pixKey: "893.512.450-80", pixKeyType: "CPF", email: "example@email.com" }
 ];
 
 function isUuidV4(uuid: string) {
-  return uuidValidate(uuid) && uuidVersion(uuid) === 4
+  return uuidValidate(uuid) && uuidVersion(uuid) === 4;
 }
 
 async function createRecipient(app: Koa<any>, data: Object) {
   return await request(app.callback())
-    .post('/recipients')
+    .post("/recipients")
     .send(data)
-    .set('Accept', 'application/json');
+    .set("Accept", "application/json");
 }
 
-describe('enroll recipients', () => {
-  test('create recipient missing name', async () => {
+describe("enroll recipients", () => {
+  test("create recipient missing name", async () => {
     const createdResponse = await createRecipient(app, {
-      federalId: '48.686.965/0001-06',
-      pixKey: '893.512.450-80',
-      pixKeyType: 'CPF',
-      email: 'example@email.com'
+      federalId: "48.686.965/0001-06",
+      pixKey: "893.512.450-80",
+      pixKeyType: "CPF",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(400);
   });
 
-  test('create recipient missing federalId', async () => {
+  test("create recipient missing federalId", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva Business LTDA',
-      pixKey: '893.512.450-80',
-      pixKeyType: 'CPF',
-      email: 'example@email.com'
+      name: "Maricleydison Silva Business LTDA",
+      pixKey: "893.512.450-80",
+      pixKeyType: "CPF",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(400);
   });
 
-  test('create recipient missing pixKey', async () => {
+  test("create recipient missing pixKey", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva Business LTDA',
-      federalId: '48.686.965/0001-06',
-      pixKeyType: 'CPF',
-      email: 'example@email.com'
+      name: "Maricleydison Silva Business LTDA",
+      federalId: "48.686.965/0001-06",
+      pixKeyType: "CPF",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(400);
   });
 
-  test('create recipient missing pixKeyType', async () => {
+  test("create recipient missing pixKeyType", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva Business LTDA',
-      federalId: '48.686.965/0001-06',
-      pixKey: '893.512.450-80',
-      email: 'example@email.com'
+      name: "Maricleydison Silva Business LTDA",
+      federalId: "48.686.965/0001-06",
+      pixKey: "893.512.450-80",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(400);
   });
 
-  test('create recipient invalid pixKey CPF', async () => {
+  test("create recipient invalid pixKey CPF", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva Business LTDA',
-      federalId: '48.686.965/0001-06',
-      pixKey: '893.512.450-8',
-      pixKeyType: 'CPF',
-      email: 'example@email.com'
+      name: "Maricleydison Silva Business LTDA",
+      federalId: "48.686.965/0001-06",
+      pixKey: "893.512.450-8",
+      pixKeyType: "CPF",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(400);
   });
 
-  test('create recipient invalid pixKey CNPJ', async () => {
+  test("create recipient invalid pixKey CNPJ", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva Business LTDA',
-      federalId: '48.686.965/0001-06',
-      pixKey: '893.512.450-8',
-      pixKeyType: 'CNPJ',
-      email: 'example@email.com'
+      name: "Maricleydison Silva Business LTDA",
+      federalId: "48.686.965/0001-06",
+      pixKey: "893.512.450-8",
+      pixKeyType: "CNPJ",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(400);
   });
 
-  test('create recipient invalid pixKey EMAIL', async () => {
+  test("create recipient invalid pixKey EMAIL", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva Business LTDA',
-      federalId: '48.686.965/0001-06',
-      pixKey: 'example@email.com_',
-      pixKeyType: 'EMAIL',
-      email: 'example@email.com'
+      name: "Maricleydison Silva Business LTDA",
+      federalId: "48.686.965/0001-06",
+      pixKey: "example@email.com_",
+      pixKeyType: "EMAIL",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(400);
   });
 
-  test('create recipient invalid pixKey TELEFONE', async () => {
+  test("create recipient invalid pixKey TELEFONE", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva Business LTDA',
-      federalId: '48.686.965/0001-06',
-      pixKey: '+5547996426703_',
-      pixKeyType: 'TELEFONE',
-      email: 'example@email.com'
+      name: "Maricleydison Silva Business LTDA",
+      federalId: "48.686.965/0001-06",
+      pixKey: "+5547996426703_",
+      pixKeyType: "TELEFONE",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(400);
   });
 
-  test('create recipient invalid pixKey CHAVE_ALEATORIA', async () => {
+  test("create recipient invalid pixKey CHAVE_ALEATORIA", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva Business LTDA',
-      federalId: '48.686.965/0001-06',
-      pixKey: '3897590759823759379',
-      pixKeyType: 'CHAVE_ALEATORIA',
-      email: 'example@email.com'
+      name: "Maricleydison Silva Business LTDA",
+      federalId: "48.686.965/0001-06",
+      pixKey: "3897590759823759379",
+      pixKeyType: "CHAVE_ALEATORIA",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(400);
   });
 
-  test('create recipient and retrieve unique recipient by uuid', async () => {
+  test("create recipient and retrieve unique recipient by uuid", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva Business LTDA',
-      federalId: '48.686.965/0001-06',
-      pixKey: '893.512.450-80',
-      pixKeyType: 'CPF',
-      email: 'example@email.com'
+      name: "Maricleydison Silva Business LTDA",
+      federalId: "48.686.965/0001-06",
+      pixKey: "893.512.450-80",
+      pixKeyType: "CPF",
+      email: "example@email.com"
     });
     const id = createdResponse.body.recipient.id;
     expect(createdResponse.status).toBe(201);
 
     const findResponse = await request(app.callback())
-      .get('/recipients/' + id)
-      .set('Accept', 'application/json');
+      .get("/recipients/" + id)
+      .set("Accept", "application/json");
     expect(findResponse.status).toBe(200);
     expect(isUuidV4(findResponse.body.recipient.id)).toBeTruthy();
     expect(findResponse.body.recipient.id).toEqual(id);
     expect(findResponse.body.recipient.deleted).toBeFalsy();
     expect(findResponse.body.recipient.createdAt).toBeDefined();
     expect(findResponse.body.recipient.updatedAt).toBeDefined();
-    expect(findResponse.body.recipient.name).toEqual('Maricleydison Silva Business LTDA');
-    expect(findResponse.body.recipient.federalId).toEqual('48.686.965/0001-06');
-    expect(findResponse.body.recipient.personNature).toEqual('LEGAL');
-    expect(findResponse.body.recipient.pixKey).toEqual('893.512.450-80');
-    expect(findResponse.body.recipient.pixKeyType).toEqual('CPF');
-    expect(findResponse.body.recipient.email).toEqual('example@email.com');
-    expect(findResponse.body.recipient.status).toEqual('RASCUNHO');
+    expect(findResponse.body.recipient.name).toEqual("Maricleydison Silva Business LTDA");
+    expect(findResponse.body.recipient.federalId).toEqual("48.686.965/0001-06");
+    expect(findResponse.body.recipient.personNature).toEqual("LEGAL");
+    expect(findResponse.body.recipient.pixKey).toEqual("893.512.450-80");
+    expect(findResponse.body.recipient.pixKeyType).toEqual("CPF");
+    expect(findResponse.body.recipient.email).toEqual("example@email.com");
+    expect(findResponse.body.recipient.status).toEqual("RASCUNHO");
   });
 
-  test('create recipient and retrieves in list with one page', async () => {
+  test("create recipient and retrieves in list with one page", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva',
-      federalId: '893.512.450-80',
-      pixKey: '+5547999998888',
-      pixKeyType: 'TELEFONE',
-      email: 'example@email.com'
+      name: "Maricleydison Silva",
+      federalId: "893.512.450-80",
+      pixKey: "+5547999998888",
+      pixKeyType: "TELEFONE",
+      email: "example@email.com"
     });
     expect(createdResponse.status).toBe(201);
 
     const listResponse = await request(app.callback())
-      .get('/recipients?page=1')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1")
+      .set("Accept", "application/json");
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.recipients).toHaveLength(1);
     expect(listResponse.body.totalRows).toEqual(1);
@@ -177,37 +177,37 @@ describe('enroll recipients', () => {
     expect(listResponse.body.recipients[0].deleted).toBeFalsy();
     expect(listResponse.body.recipients[0].createdAt).toBeDefined();
     expect(listResponse.body.recipients[0].updatedAt).toBeDefined();
-    expect(listResponse.body.recipients[0].name).toEqual('Maricleydison Silva');
-    expect(listResponse.body.recipients[0].federalId).toEqual('893.512.450-80');
-    expect(listResponse.body.recipients[0].personNature).toEqual('NATURAL');
-    expect(listResponse.body.recipients[0].pixKey).toEqual('+5547999998888');
-    expect(listResponse.body.recipients[0].pixKeyType).toEqual('TELEFONE');
-    expect(listResponse.body.recipients[0].email).toEqual('example@email.com');
+    expect(listResponse.body.recipients[0].name).toEqual("Maricleydison Silva");
+    expect(listResponse.body.recipients[0].federalId).toEqual("893.512.450-80");
+    expect(listResponse.body.recipients[0].personNature).toEqual("NATURAL");
+    expect(listResponse.body.recipients[0].pixKey).toEqual("+5547999998888");
+    expect(listResponse.body.recipients[0].pixKeyType).toEqual("TELEFONE");
+    expect(listResponse.body.recipients[0].email).toEqual("example@email.com");
   });
 
-  test('create recipients and retrieves in list with two pages', async () => {
+  test("create recipients and retrieves in list with two pages", async () => {
     await Promise.all(sampleRecipients.map(recipient => {
       return createRecipient(app, recipient);
     }));
     
     const listResponsePage1 = await request(app.callback())
-      .get('/recipients?page=1')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1")
+      .set("Accept", "application/json");
     expect(listResponsePage1.status).toBe(200);
     expect(listResponsePage1.body.recipients).toHaveLength(10);
     expect(listResponsePage1.body.totalRows).toEqual(11);
     expect(listResponsePage1.body.totalPages).toEqual(2);
 
     const listResponsePage2 = await request(app.callback())
-      .get('/recipients?page=2')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=2")
+      .set("Accept", "application/json");
     expect(listResponsePage2.status).toBe(200);
     expect(listResponsePage2.body.recipients).toHaveLength(1);
     expect(listResponsePage2.body.totalRows).toEqual(11);
     expect(listResponsePage2.body.totalPages).toEqual(2);
   });
 
-  test('create recipients and retrieves in list filtering by name', async () => {
+  test("create recipients and retrieves in list filtering by name", async () => {
     await Promise.all(sampleRecipients.map(recipient => {
       return createRecipient(app, recipient);
     }));
@@ -226,20 +226,20 @@ describe('enroll recipients', () => {
         }
       },
       data: {
-        name: 'teste'
+        name: "teste"
       }
     });
 
     const listResponse = await request(app.callback())
-      .get('/recipients?page=1&name=teste')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1&name=teste")
+      .set("Accept", "application/json");
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.recipients).toHaveLength(3);
     expect(listResponse.body.totalRows).toEqual(3);
     expect(listResponse.body.totalPages).toEqual(1);
   });
 
-  test('create recipients and retrieves in list filtering by status', async () => {
+  test("create recipients and retrieves in list filtering by status", async () => {
     await Promise.all(sampleRecipients.map(recipient => {
       return createRecipient(app, recipient);
     }));
@@ -258,20 +258,20 @@ describe('enroll recipients', () => {
         }
       },
       data: {
-        status: 'VALIDADO'
+        status: "VALIDADO"
       }
     });
 
     const listResponse = await request(app.callback())
-      .get('/recipients?page=1&status=VALIDADO')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1&status=VALIDADO")
+      .set("Accept", "application/json");
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.recipients).toHaveLength(3);
     expect(listResponse.body.totalRows).toEqual(3);
     expect(listResponse.body.totalPages).toEqual(1);
   });
 
-  test('create recipients and retrieves in list filtering by pixKey', async () => {
+  test("create recipients and retrieves in list filtering by pixKey", async () => {
     await Promise.all(sampleRecipients.map(recipient => {
       return createRecipient(app, recipient);
     }));
@@ -290,20 +290,20 @@ describe('enroll recipients', () => {
         }
       },
       data: {
-        pixKey: '000.000.000-01'
+        pixKey: "000.000.000-01"
       }
     });
 
     const listResponse = await request(app.callback())
-      .get('/recipients?page=1&pixKey=000-01')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1&pixKey=000-01")
+      .set("Accept", "application/json");
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.recipients).toHaveLength(3);
     expect(listResponse.body.totalRows).toEqual(3);
     expect(listResponse.body.totalPages).toEqual(1);
   });
 
-  test('create recipients and retrieves in list filtering by pixKeyType', async () => {
+  test("create recipients and retrieves in list filtering by pixKeyType", async () => {
     await Promise.all(sampleRecipients.map(recipient => {
       return createRecipient(app, recipient);
     }));
@@ -322,13 +322,13 @@ describe('enroll recipients', () => {
         }
       },
       data: {
-        pixKeyType: 'TELEFONE'
+        pixKeyType: "TELEFONE"
       }
     });
 
     const listResponse = await request(app.callback())
-      .get('/recipients?page=1&pixKeyType=TELEFONE')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1&pixKeyType=TELEFONE")
+      .set("Accept", "application/json");
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.recipients).toHaveLength(3);
     expect(listResponse.body.totalRows).toEqual(3);
@@ -336,33 +336,33 @@ describe('enroll recipients', () => {
   });
 
 
-  test('deletes a recipient', async () => {
+  test("deletes a recipient", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva',
-      federalId: '893.512.450-80',
-      pixKey: '893.512.450-80',
-      pixKeyType: 'CPF',
-      email: 'example@email.com'
+      name: "Maricleydison Silva",
+      federalId: "893.512.450-80",
+      pixKey: "893.512.450-80",
+      pixKeyType: "CPF",
+      email: "example@email.com"
     });
     const id = createdResponse.body.recipient.id;
     expect(createdResponse.status).toBe(201);
 
     let listResponse = await request(app.callback())
-      .get('/recipients?page=1')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1")
+      .set("Accept", "application/json");
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.recipients).toHaveLength(1);
     expect(listResponse.body.totalRows).toEqual(1);
     expect(listResponse.body.totalPages).toEqual(1);
 
     const deleteResponse = await request(app.callback())
-      .delete('/recipients/' + id)
-      .set('Accept', 'application/json');
+      .delete("/recipients/" + id)
+      .set("Accept", "application/json");
     expect(deleteResponse.status).toBe(200);
 
     listResponse = await request(app.callback())
-      .get('/recipients?page=1')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1")
+      .set("Accept", "application/json");
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.recipients).toHaveLength(0);
     expect(listResponse.body.totalRows).toEqual(0);
@@ -373,7 +373,7 @@ describe('enroll recipients', () => {
     expect(recipientsInDatabase[0].deleted).toBeTruthy();
   });
 
-  test('batch deletes recipients', async () => {
+  test("batch deletes recipients", async () => {
     const createdResponse1 = await createRecipient(app, sampleRecipients[0]);
     const createdResponse2 = await createRecipient(app, sampleRecipients[1]);
     const id1 = createdResponse1.body.recipient.id;
@@ -382,24 +382,24 @@ describe('enroll recipients', () => {
     expect(createdResponse2.status).toBe(201);
 
     let listResponse = await request(app.callback())
-      .get('/recipients?page=1')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1")
+      .set("Accept", "application/json");
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.recipients).toHaveLength(2);
     expect(listResponse.body.totalRows).toEqual(2);
     expect(listResponse.body.totalPages).toEqual(1);
 
     const batchDeleteResponse = await request(app.callback())
-      .post('/recipients/batch-delete')
+      .post("/recipients/batch-delete")
       .send({
         ids: [id1, id2]
       })
-      .set('Accept', 'application/json');
+      .set("Accept", "application/json");
     expect(batchDeleteResponse.status).toBe(200);
 
     listResponse = await request(app.callback())
-      .get('/recipients?page=1')
-      .set('Accept', 'application/json');
+      .get("/recipients?page=1")
+      .set("Accept", "application/json");
     expect(listResponse.status).toBe(200);
     expect(listResponse.body.recipients).toHaveLength(0);
     expect(listResponse.body.totalRows).toEqual(0);
@@ -411,50 +411,50 @@ describe('enroll recipients', () => {
     expect(recipientsInDatabase[0].deleted).toBeTruthy();
   });
 
-  test('edits a recipient', async () => {
+  test("edits a recipient", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva',
-      federalId: '893.512.450-80',
-      pixKey: '893.512.450-80',
-      pixKeyType: 'CPF',
-      email: 'example@email.com'
+      name: "Maricleydison Silva",
+      federalId: "893.512.450-80",
+      pixKey: "893.512.450-80",
+      pixKeyType: "CPF",
+      email: "example@email.com"
     });
     const id = createdResponse.body.recipient.id;
     expect(createdResponse.status).toBe(201);
 
     const editResponse = await request(app.callback())
-      .put('/recipients/' + id)
+      .put("/recipients/" + id)
       .send({
-        email: 'example2@email.com'
+        email: "example2@email.com"
       })
-      .set('Accept', 'application/json');
+      .set("Accept", "application/json");
     expect(editResponse.status).toBe(200);
 
     const findResponse = await request(app.callback())
-      .get('/recipients/' + id)
-      .set('Accept', 'application/json');
+      .get("/recipients/" + id)
+      .set("Accept", "application/json");
     expect(findResponse.status).toBe(200);
     expect(isUuidV4(findResponse.body.recipient.id)).toBeTruthy();
     expect(findResponse.body.recipient.id).toEqual(id);
     expect(findResponse.body.recipient.deleted).toBeFalsy();
     expect(findResponse.body.recipient.createdAt).toBeDefined();
     expect(findResponse.body.recipient.updatedAt).toBeDefined();
-    expect(findResponse.body.recipient.name).toEqual('Maricleydison Silva');
-    expect(findResponse.body.recipient.federalId).toEqual('893.512.450-80');
-    expect(findResponse.body.recipient.personNature).toEqual('NATURAL');
-    expect(findResponse.body.recipient.pixKey).toEqual('893.512.450-80');
-    expect(findResponse.body.recipient.pixKeyType).toEqual('CPF');
-    expect(findResponse.body.recipient.email).toEqual('example2@email.com');
-    expect(findResponse.body.recipient.status).toEqual('RASCUNHO');
+    expect(findResponse.body.recipient.name).toEqual("Maricleydison Silva");
+    expect(findResponse.body.recipient.federalId).toEqual("893.512.450-80");
+    expect(findResponse.body.recipient.personNature).toEqual("NATURAL");
+    expect(findResponse.body.recipient.pixKey).toEqual("893.512.450-80");
+    expect(findResponse.body.recipient.pixKeyType).toEqual("CPF");
+    expect(findResponse.body.recipient.email).toEqual("example2@email.com");
+    expect(findResponse.body.recipient.status).toEqual("RASCUNHO");
   });
 
-  test('edits a validated recipient allows to change email', async () => {
+  test("edits a validated recipient allows to change email", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva',
-      federalId: '893.512.450-80',
-      pixKey: '893.512.450-80',
-      pixKeyType: 'CPF',
-      email: 'example@email.com'
+      name: "Maricleydison Silva",
+      federalId: "893.512.450-80",
+      pixKey: "893.512.450-80",
+      pixKeyType: "CPF",
+      email: "example@email.com"
     });
     const id = createdResponse.body.recipient.id;
     expect(createdResponse.status).toBe(201);
@@ -464,34 +464,34 @@ describe('enroll recipients', () => {
         id: id
       },
       data: {
-        status: 'VALIDADO'
+        status: "VALIDADO"
       }
     });
 
     const editResponse = await request(app.callback())
-      .put('/recipients/' + id)
+      .put("/recipients/" + id)
       .send({
-        email: 'example2@email.com'
+        email: "example2@email.com"
       })
-      .set('Accept', 'application/json');
+      .set("Accept", "application/json");
     expect(editResponse.status).toBe(200);
 
     const findResponse = await request(app.callback())
-      .get('/recipients/' + id)
-      .set('Accept', 'application/json');
+      .get("/recipients/" + id)
+      .set("Accept", "application/json");
     expect(findResponse.status).toBe(200);
     expect(findResponse.body.recipient.id).toEqual(id);
-    expect(findResponse.body.recipient.email).toEqual('example2@email.com');
-    expect(findResponse.body.recipient.status).toEqual('VALIDADO');
+    expect(findResponse.body.recipient.email).toEqual("example2@email.com");
+    expect(findResponse.body.recipient.status).toEqual("VALIDADO");
   });
 
-  test('edits a validated recipient throws error when try to change other fields', async () => {
+  test("edits a validated recipient throws error when try to change other fields", async () => {
     const createdResponse = await createRecipient(app, {
-      name: 'Maricleydison Silva',
-      federalId: '893.512.450-80',
-      pixKey: '893.512.450-80',
-      pixKeyType: 'CPF',
-      email: 'example@email.com'
+      name: "Maricleydison Silva",
+      federalId: "893.512.450-80",
+      pixKey: "893.512.450-80",
+      pixKeyType: "CPF",
+      email: "example@email.com"
     });
     const id = createdResponse.body.recipient.id;
     expect(createdResponse.status).toBe(201);
@@ -501,49 +501,49 @@ describe('enroll recipients', () => {
         id: id
       },
       data: {
-        status: 'VALIDADO'
+        status: "VALIDADO"
       }
     });
 
     const editResponse1 = await request(app.callback())
-      .put('/recipients/' + id)
+      .put("/recipients/" + id)
       .send({
-        name: 'Zequinha'
+        name: "Zequinha"
       })
-      .set('Accept', 'application/json');
+      .set("Accept", "application/json");
     expect(editResponse1.status).toEqual(400);
 
     const editResponse2 = await request(app.callback())
-      .put('/recipients/' + id)
+      .put("/recipients/" + id)
       .send({
-        federalId: '236.289.590-47'
+        federalId: "236.289.590-47"
       })
-      .set('Accept', 'application/json');
+      .set("Accept", "application/json");
     expect(editResponse2.status).toEqual(400);
 
     const editResponse3 = await request(app.callback())
-      .put('/recipients/' + id)
+      .put("/recipients/" + id)
       .send({
-        pixKey: '236.289.590-47'
+        pixKey: "236.289.590-47"
       })
-      .set('Accept', 'application/json');
+      .set("Accept", "application/json");
     expect(editResponse3.status).toEqual(400);
 
     const editResponse4 = await request(app.callback())
-      .put('/recipients/' + id)
+      .put("/recipients/" + id)
       .send({
-        pixKeyType: 'CHAVE_ALEATORIA'
+        pixKeyType: "CHAVE_ALEATORIA"
       })
-      .set('Accept', 'application/json');
+      .set("Accept", "application/json");
     expect(editResponse4.status).toEqual(400);
 
     const findResponse = await request(app.callback())
-      .get('/recipients/' + id)
-      .set('Accept', 'application/json');
+      .get("/recipients/" + id)
+      .set("Accept", "application/json");
     expect(findResponse.status).toBe(200);
     expect(findResponse.body.recipient.id).toEqual(id);
-    expect(findResponse.body.recipient.email).toEqual('example@email.com');
-    expect(findResponse.body.recipient.status).toEqual('VALIDADO');
+    expect(findResponse.body.recipient.email).toEqual("example@email.com");
+    expect(findResponse.body.recipient.status).toEqual("VALIDADO");
   });
 
   beforeEach(async () => {
